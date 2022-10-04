@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool? value = false;
+
   @override
   void initState() {
     request();
@@ -25,9 +27,9 @@ class _HomePageState extends State<HomePage> {
   String? mtoken = '';
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-    TextEditingController user_name = TextEditingController();
-    TextEditingController user_title = TextEditingController();
-    TextEditingController user_body = TextEditingController();
+  TextEditingController user_name = TextEditingController();
+  TextEditingController user_title = TextEditingController();
+  TextEditingController user_body = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +52,30 @@ class _HomePageState extends State<HomePage> {
                 String name = user_name.text.trim();
                 String title = user_title.text;
                 String body = user_body.text;
+                List c = [];
+
                 if (name != '') {
-                  DocumentSnapshot snap = await FirebaseFirestore.instance
-                      .collection('UserTokens')
-                      .doc(name)
-                      .get();
-                  String token = snap['token'];
-                  print(token);
-                  sendMessage(token, body, title);
+                  if (value!) {
+                    print('to everyone');
+                    QuerySnapshot querySnapshot = await FirebaseFirestore
+                        .instance
+                        .collection("Users")
+                        .get();
+                    for (int i = 0; i < querySnapshot.docs.length; i++) {
+                      var a = querySnapshot.docs[i];
+                      sendMessage(a.get('token'), body, title);
+                    }
+                  } else {
+                    print('chapaaa running');
+
+                    DocumentSnapshot snap = await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(name)
+                        .get();
+                    String token = snap.get('token');
+                    print(snap.get('token'));
+                    sendMessage(token, body, title);
+                  }
                 }
               },
               child: Container(
@@ -69,7 +87,15 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-            )
+            ),
+            Checkbox(
+                value: this.value,
+                onChanged: (value) {
+                  setState(() {
+                    this.value = value;
+                  });
+                  print(value);
+                })
           ],
         ),
       ),
@@ -103,17 +129,23 @@ class _HomePageState extends State<HomePage> {
           mtoken = value;
           print('Token is $mtoken');
         });
-        saveToken(value!);
+        // saveToken(value!);
       },
     );
   }
 
-  void saveToken(String token) async {
-    await FirebaseFirestore.instance
-        .collection('UserTokens')
-        .doc('User2')
-        .set({'token': token});
-  }
+  // Future getDocs() async {
+
+  //     print(c);
+  //   }
+  // }
+
+  // void saveToken(String token) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('UserTokens')
+  //       .doc('User2')
+  //       .set({'token': token});
+  // }
 
   initInfo() {
     var android = const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -147,7 +179,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void sendMessage(String token, String body, String title) async {
+  void sendMessage(token, String body, String title) async {
     try {
       await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
           headers: <String, String>{

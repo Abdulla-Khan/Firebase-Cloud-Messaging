@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:tttt/login.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({super.key});
@@ -33,10 +34,7 @@ class _SignUpState extends State<SignUp> {
               mtoken = value;
               print('Token is $mtoken');
             });
-            await FirebaseFirestore.instance
-                .collection('Users')
-                .doc(credential.user!.uid)
-                .set({
+            await FirebaseFirestore.instance.collection('Users').doc(name).set({
               'name': name,
               'email': email,
               'password': password,
@@ -59,6 +57,19 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => LoginPage()));
+              },
+              child: Text(
+                'Login',
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,24 +91,8 @@ class _SignUpState extends State<SignUp> {
                 signIn(email.text, password.text, name.text);
               },
               child: Text('SignUp')),
-          ElevatedButton(
-              onPressed: () {
-                getDocs();
-              },
-              child: Text('SignUp'))
         ],
       ),
     );
-  }
-
-  Future getDocs() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("Users").get();
-    for (int i = 0; i < querySnapshot.docs.length; i++) {
-      var a = querySnapshot.docs[i];
-      List c = [];
-      c.add(a.get('token'));
-      print(c);
-    }
   }
 }
