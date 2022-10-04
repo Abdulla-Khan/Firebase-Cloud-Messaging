@@ -25,9 +25,9 @@ class _HomePageState extends State<HomePage> {
   String? mtoken = '';
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  TextEditingController user_name = TextEditingController();
-  TextEditingController user_title = TextEditingController();
-  TextEditingController user_body = TextEditingController();
+    TextEditingController user_name = TextEditingController();
+    TextEditingController user_title = TextEditingController();
+    TextEditingController user_body = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
   void saveToken(String token) async {
     await FirebaseFirestore.instance
         .collection('UserTokens')
-        .doc('User1')
+        .doc('User2')
         .set({'token': token});
   }
 
