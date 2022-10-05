@@ -26,6 +26,9 @@ class _SignUpState extends State<SignUp> {
         email: email,
         password: password,
       );
+      await credential.user!.updateDisplayName(name);
+
+      print(credential.user!.displayName);
 
       if (credential.user!.uid.isNotEmpty) {
         await FirebaseMessaging.instance.getToken().then(
@@ -36,7 +39,7 @@ class _SignUpState extends State<SignUp> {
             });
             await FirebaseFirestore.instance.collection('Users').doc(name).set({
               'name': name,
-              'email': email,
+              'email': credential.user!.email,
               'password': password,
               'token': value
             });
