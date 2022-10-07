@@ -5,9 +5,13 @@ class EmailFeild extends StatelessWidget {
   const EmailFeild({
     Key? key,
     required this.controller,
+    required this.label,
+    required this.isEmail,
   }) : super(key: key);
 
   final TextEditingController controller;
+  final String label;
+  final bool isEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +30,14 @@ class EmailFeild extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.black)),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-              labelText: 'Email',
+              labelText: label,
               labelStyle: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 20)),
-          validator: EmailValidator(errorText: 'Not a valid Email'),
+          validator: isEmail
+              ? EmailValidator(errorText: 'Not a valid Email')
+              : RequiredValidator(errorText: 'Needs to be filled'),
         ),
       ),
     );

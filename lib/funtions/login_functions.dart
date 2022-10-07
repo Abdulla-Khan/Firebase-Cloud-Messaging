@@ -42,7 +42,7 @@ class LoginMethods {
               .update({'token': value})
               .then((value) => print("User Updated"))
               .catchError((error) => print("Failed to update user: $error"));
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomePage()));
         });
       } else {

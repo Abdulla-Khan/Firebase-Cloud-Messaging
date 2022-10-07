@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tttt/funtions/login_functions.dart';
 import 'package:tttt/views/components/text_feilds.dart';
+import 'package:tttt/views/pages/sign-up.dart';
+
+import '../../funtions/login_functions.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -49,7 +51,11 @@ class _LoginPageState extends State<LoginPage> {
                           image: AssetImage('assets/login.gif'),
                           fit: BoxFit.cover)),
                 ),
-                EmailFeild(controller: email),
+                EmailFeild(
+                  controller: email,
+                  label: 'email',
+                  isEmail: true,
+                ),
                 SizedBox(height: 30),
                 PasswordFeild(controller: password),
                 GestureDetector(
@@ -91,7 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                           overlayColor: MaterialStateColor.resolveWith(
                               (states) => Colors.transparent),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => SignUp()));
+                        },
                         child: Text('Create one',
                             style: TextStyle(
                               decoration: TextDecoration.underline,

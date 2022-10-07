@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tttt/views/pages/login.dart';
+import 'package:tttt/views/pages/sign-up.dart';
 
 import 'firebase_options.dart';
 
