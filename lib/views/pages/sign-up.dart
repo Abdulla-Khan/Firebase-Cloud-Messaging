@@ -31,8 +31,10 @@ class _SignUpState extends State<SignUp> {
           child: Container(
             height: size.height,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/login.png'), fit: BoxFit.cover)),
+                gradient: LinearGradient(colors: [
+              Color(0xFFE6DADA),
+              Color.fromARGB(255, 119, 116, 116)
+            ])),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

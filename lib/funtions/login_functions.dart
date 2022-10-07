@@ -22,7 +22,7 @@ class LoginMethods {
             .then((value) => print("User Updated"))
             .catchError((error) => print("Failed to update user: $error"));
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomePage()));
+            context, MaterialPageRoute(builder: (_) => HomePage(name: name!,)));
       });
     }
   }
@@ -44,7 +44,7 @@ class LoginMethods {
               .then((value) => print("User Updated"))
               .catchError((error) => print("Failed to update user: $error"));
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomePage()));
+              context, MaterialPageRoute(builder: (_) => HomePage(name: credential.user!.displayName,)));
         });
       } else {
         ScaffoldMessenger.of(context)

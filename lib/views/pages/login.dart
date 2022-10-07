@@ -19,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     LoginMethods.checkLogin(context);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -34,10 +33,15 @@ class _LoginPageState extends State<LoginPage> {
             FocusScope.of(context).unfocus();
           },
           child: Container(
-            height: size.height,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/login.png'), fit: BoxFit.cover)),
+                gradient: LinearGradient(colors: [
+              Color(0xFFE6DADA),
+              Color.fromARGB(255, 119, 116, 116)
+            ])),
+            height: size.height,
+            // decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //         image: AssetImage('assets/login.png'), fit: BoxFit.cover)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
