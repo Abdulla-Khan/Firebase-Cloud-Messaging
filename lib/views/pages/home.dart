@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tttt/views/components/text_feilds.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,79 +28,91 @@ class _HomePageState extends State<HomePage> {
   String? mtoken = '';
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  TextEditingController user_name = TextEditingController();
-  TextEditingController user_title = TextEditingController();
-  TextEditingController user_body = TextEditingController();
+  TextEditingController nameC = TextEditingController();
+  TextEditingController titleC = TextEditingController();
+  TextEditingController bodyC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: user_name,
-            ),
-            TextFormField(
-              controller: user_title,
-            ),
-            TextFormField(
-              controller: user_body,
-            ),
-            GestureDetector(
-              onTap: () async {
-                String name = user_name.text.trim();
-                String title = user_title.text;
-                String body = user_body.text;
-                List c = [];
+        body: GestureDetector(
+      onTap: () {
+        print('tappd');
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          EmailFeild(
+            controller: nameC,
+            label: 'Name',
+            isEmail: false,
+            hint: "Reciver's name",
+          ),
+          SizedBox(height: 20),
+          EmailFeild(
+            controller: titleC,
+            label: 'Title',
+            isEmail: false,
+            hint: 'Title of Message',
+          ),
+          SizedBox(height: 20),
+          EmailFeild(
+            controller: bodyC,
+            label: 'Body',
+            isEmail: false,
+            hint: 'Body of Message',
+          ),
+          GestureDetector(
+            onTap: () async {
+              String name = nameC.text.trim();
+              String title = titleC.text;
+              String body = bodyC.text;
+              List c = [];
 
-                if (name != '') {
-                  if (value!) {
-                    print('to everyone');
-                    QuerySnapshot querySnapshot = await FirebaseFirestore
-                        .instance
-                        .collection("Users")
-                        .get();
-                    for (int i = 0; i < querySnapshot.docs.length; i++) {
-                      var a = querySnapshot.docs[i];
-                      sendMessage(a.get('token'), body, title);
-                    }
-                  } else {
-                    print('chapaaa running');
-
-                    DocumentSnapshot snap = await FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(name)
-                        .get();
-                    String token = snap.get('token');
-                    print(snap.get('token'));
-                    sendMessage(token, body, title);
+              if (name != '') {
+                if (value!) {
+                  print('to everyone');
+                  QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+                      .collection("Users")
+                      .get();
+                  for (int i = 0; i < querySnapshot.docs.length; i++) {
+                    var a = querySnapshot.docs[i];
+                    sendMessage(a.get('token'), body, title);
                   }
+                } else {
+                  print('chapaaa running');
+
+                  DocumentSnapshot snap = await FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(name)
+                      .get();
+                  String token = snap.get('token');
+                  print(snap.get('token'));
+                  sendMessage(token, body, title);
                 }
-              },
-              child: Container(
-                margin: EdgeInsets.all(20),
-                height: 40,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(20),
-                ),
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.all(20),
+              height: 40,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
               ),
             ),
-            Checkbox(
-                value: this.value,
-                onChanged: (value) {
-                  setState(() {
-                    this.value = value;
-                  });
-                  print(value);
-                })
-          ],
-        ),
+          ),
+          Checkbox(
+              value: this.value,
+              onChanged: (value) {
+                setState(() {
+                  this.value = value;
+                });
+                print(value);
+              })
+        ],
       ),
-    );
+    ));
   }
 
   void request() async {

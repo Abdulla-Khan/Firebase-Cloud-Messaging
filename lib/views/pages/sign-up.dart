@@ -17,7 +17,6 @@ class _SignUpState extends State<SignUp> {
   TextEditingController email = TextEditingController();
 
   TextEditingController password = TextEditingController();
-  String? mtoken = '';
 
   @override
   Widget build(BuildContext context) {

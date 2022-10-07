@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // LoginMethods.checkLogin(context);
+    LoginMethods.checkLogin(context);
     // TODO: implement initState
     super.initState();
   }
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 EmailFeild(
                   controller: email,
-                  label: 'email',
+                  label: 'Email',
                   isEmail: true,
                 ),
                 SizedBox(height: 30),

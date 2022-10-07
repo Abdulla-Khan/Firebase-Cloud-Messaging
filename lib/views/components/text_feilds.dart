@@ -7,11 +7,15 @@ class EmailFeild extends StatelessWidget {
     required this.controller,
     required this.label,
     required this.isEmail,
-  }) : super(key: key);
+    this.hint= '',
+  } 
+  
+  ) : super(key: key);
 
   final TextEditingController controller;
   final String label;
   final bool isEmail;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class EmailFeild extends StatelessWidget {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
               labelText: label,
+              hintText: hint,
               labelStyle: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
