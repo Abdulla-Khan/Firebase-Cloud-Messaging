@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
@@ -22,18 +21,8 @@ class HomeFunctions {
       initialSetting,
     );
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print('=============Message=============');
-      print('onMessage: ${message.notification?.title}');
-      print('onMessage: ${message.notification?.body}');
-
-      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
-        message.notification!.body.toString(),
-        htmlFormatBigText: true,
-        contentTitle: message.notification?.title.toString(),
-        htmlFormatContentTitle: true,
-      );
       AndroidNotificationDetails androidNotificationDetails =
-          AndroidNotificationDetails('tttt', 'tttt',
+          const AndroidNotificationDetails('tttt', 'tttt',
               importance: Importance.max,
               priority: Priority.max,
               playSound: false);
@@ -46,7 +35,7 @@ class HomeFunctions {
     });
   }
 
-  static void sendMessage(token, String body, String title) async {
+  static void sendMessage(token, String body, String title, context) async {
     try {
       await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
           headers: <String, String>{
@@ -70,7 +59,8 @@ class HomeFunctions {
             "to": token
           }));
     } catch (e) {
-      print("=========================$e+++++++++++++++++++=++++++++");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 
@@ -87,35 +77,27 @@ class HomeFunctions {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('============= GRANTED=============');
     } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('============= Provisional=============');
-    }
+        AuthorizationStatus.provisional) {}
   }
 
-  static tap(String name, String title, String body, bool? value) async {
-    List c = [];
-
+  static tap(
+      String name, String title, String body, bool? value, context) async {
     if (name != '') {
       if (value!) {
-        print('to everyone');
         QuerySnapshot querySnapshot =
             await FirebaseFirestore.instance.collection("Users").get();
         for (int i = 0; i < querySnapshot.docs.length; i++) {
           var a = querySnapshot.docs[i];
-          HomeFunctions.sendMessage(a.get('token'), body, title);
+          HomeFunctions.sendMessage(a.get('token'), body, title, context);
         }
       } else {
-        print('chapaaa running');
-
         DocumentSnapshot snap = await FirebaseFirestore.instance
             .collection('Users')
             .doc(name)
             .get();
         String token = snap.get('token');
-        print(snap.get('token'));
-        HomeFunctions.sendMessage(token, body, title);
+        HomeFunctions.sendMessage(token, body, title, context);
       }
     }
   }
@@ -128,6 +110,6 @@ class HomeFunctions {
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => LoginPage()));
+        context, MaterialPageRoute(builder: (_) => const LoginPage()));
   }
 }

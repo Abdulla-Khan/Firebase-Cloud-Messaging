@@ -7,10 +7,8 @@ class EmailFeild extends StatelessWidget {
     required this.controller,
     required this.label,
     required this.isEmail,
-    this.hint= '',
-  } 
-  
-  ) : super(key: key);
+    this.hint = '',
+  }) : super(key: key);
 
   final TextEditingController controller;
   final String label;
@@ -31,12 +29,12 @@ class EmailFeild extends StatelessWidget {
           decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(color: Colors.black)),
+                  borderSide: const BorderSide(color: Colors.black)),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
               labelText: label,
               hintText: hint,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 20)),
@@ -50,7 +48,7 @@ class EmailFeild extends StatelessWidget {
 }
 
 class PasswordFeild extends StatefulWidget {
-  PasswordFeild({
+  const PasswordFeild({
     Key? key,
     required this.controller,
   }) : super(key: key);
@@ -88,10 +86,10 @@ class _PasswordFeildState extends State<PasswordFeild> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(color: Colors.black)),
+                borderSide: const BorderSide(color: Colors.black)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
             labelText: 'Password',
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 20)),

@@ -36,9 +36,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             width: size.width,
             height: size.height,
-            // margin: EdgeInsets.all(8),
-            // color: Colors.transparent,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
               Color(0xFFE6DADA),
               Color.fromARGB(255, 119, 116, 116)
@@ -48,7 +46,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20, bottom: 30, top: 100),
+                  margin: const EdgeInsets.only(left: 20, bottom: 30, top: 100),
                   width: 300,
                   height: 100,
                   child: Column(
@@ -82,14 +80,14 @@ class _HomePageState extends State<HomePage> {
                       isEmail: false,
                       hint: "Reciver's name",
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     EmailFeild(
                       controller: titleC,
                       label: 'Title',
                       isEmail: false,
                       hint: 'Title of Message',
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     EmailFeild(
                       controller: bodyC,
                       label: 'Body',
@@ -106,13 +104,13 @@ class _HomePageState extends State<HomePage> {
                           titleC.clear();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Enter Required Data'),
+                            content: const Text('Enter Required Data'),
                             backgroundColor: Colors.black.withOpacity(0.4),
                           ));
                         }
                       },
                       child: Container(
-                        margin: EdgeInsets.only(top: 30),
+                        margin: const EdgeInsets.only(top: 30),
                         width: size.width / 1.5,
                         height: size.height / 17,
                         decoration: BoxDecoration(
@@ -129,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Send to Every User',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
@@ -145,7 +143,6 @@ class _HomePageState extends State<HomePage> {
                               setState(() {
                                 this.value = value;
                               });
-                              print(value);
                             }),
                       ],
                     )
@@ -157,11 +154,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.logout),
           backgroundColor: Colors.transparent.withOpacity(0.4),
           onPressed: () {
             HomeFunctions.logOut(context);
-          }),
+          },
+          child: const Icon(Icons.logout)),
     );
   }
 }

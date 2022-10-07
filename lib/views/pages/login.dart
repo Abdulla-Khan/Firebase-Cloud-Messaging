@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tttt/views/components/text_feilds.dart';
-import 'package:tttt/views/pages/sign-up.dart';
+import 'package:tttt/views/pages/signup.dart';
 
 import '../../funtions/login_functions.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -33,24 +33,21 @@ class _LoginPageState extends State<LoginPage> {
             FocusScope.of(context).unfocus();
           },
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
               Color(0xFFE6DADA),
               Color.fromARGB(255, 119, 116, 116)
             ])),
             height: size.height,
-            // decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //         image: AssetImage('assets/login.png'), fit: BoxFit.cover)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   height: size.height / 2,
                   width: size.width / 1,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/login.gif'),
                           fit: BoxFit.cover)),
@@ -60,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                   label: 'Email',
                   isEmail: true,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 PasswordFeild(controller: password),
                 GestureDetector(
                   onTap: () {
@@ -68,13 +65,13 @@ class _LoginPageState extends State<LoginPage> {
                       LoginMethods.login(email.text, password.text, context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Enter your credentials'),
+                        content: const Text('Enter your credentials'),
                         backgroundColor: Colors.black.withOpacity(0.4),
                       ));
                     }
                   },
                   child: Container(
-                    margin: EdgeInsets.only(top: 30),
+                    margin: const EdgeInsets.only(top: 30),
                     width: size.width / 2,
                     height: size.height / 17,
                     decoration: BoxDecoration(
@@ -103,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () {
                           Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => SignUp()));
+                              MaterialPageRoute(builder: (_) => const SignUp()));
                         },
                         child: Text('Create one',
                             style: TextStyle(

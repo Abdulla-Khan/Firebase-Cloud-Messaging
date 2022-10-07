@@ -12,17 +12,25 @@ class LoginMethods {
     String? val = pref.getString('login');
     String? name = pref.getString('name');
 
-    print(val);
     if (val != null) {
       await FirebaseMessaging.instance.getToken().then((value) async {
         FirebaseFirestore.instance
             .collection('Users')
             .doc(name)
             .update({'token': value})
-            .then((value) => print("User Updated"))
-            .catchError((error) => print("Failed to update user: $error"));
+            .then((value) => ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('User Updated'))))
+            .catchError(
+              (error) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(("Failed to update user: $error"))),
+              ),
+            );
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomePage(name: name!,)));
+            context,
+            MaterialPageRoute(
+                builder: (_) => HomePage(
+                      name: name!,
+                    )));
       });
     }
   }
@@ -33,7 +41,6 @@ class LoginMethods {
           .signInWithEmailAndPassword(email: email, password: password);
       if (credential.user!.uid.isNotEmpty) {
         SharedPreferences pref = await SharedPreferences.getInstance();
-        print(credential.user!.displayName);
         await pref.setString('login', credential.user!.uid);
         await pref.setString('name', credential.user!.displayName ?? "");
         await FirebaseMessaging.instance.getToken().then((value) async {
@@ -41,22 +48,28 @@ class LoginMethods {
               .collection('Users')
               .doc(credential.user!.displayName)
               .update({'token': value})
-              .then((value) => print("User Updated"))
-              .catchError((error) => print("Failed to update user: $error"));
+              .then((value) => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('User Updated'))))
+              .catchError((error) => ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Failed to update user: $error"))));
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomePage(name: credential.user!.displayName,)));
+              context,
+              MaterialPageRoute(
+                  builder: (_) => HomePage(
+                        name: credential.user!.displayName,
+                      )));
         });
       } else {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Invalid Credentials')));
+            .showSnackBar(const SnackBar(content: Text('Invalid Credentials')));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('No user found for that email.')));
+            const SnackBar(content: Text('No user found for that email.')));
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Wrong password provided for that user.')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Wrong password provided for that user.')));
       }
     }
   }

@@ -5,7 +5,7 @@ import 'package:tttt/views/components/text_feilds.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({super.key});
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -30,7 +30,7 @@ class _SignUpState extends State<SignUp> {
           },
           child: Container(
             height: size.height,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
               Color(0xFFE6DADA),
               Color.fromARGB(255, 119, 116, 116)
@@ -40,10 +40,10 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   height: size.height / 2,
                   width: size.width / 1,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/login.gif'),
                           fit: BoxFit.cover)),
@@ -53,13 +53,13 @@ class _SignUpState extends State<SignUp> {
                   label: 'Name',
                   isEmail: false,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 EmailFeild(
                   controller: email,
                   label: 'Email',
                   isEmail: true,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 PasswordFeild(controller: password),
                 GestureDetector(
                   onTap: () async {
@@ -74,13 +74,13 @@ class _SignUpState extends State<SignUp> {
                       name.clear();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Enter your credentials'),
+                        content: const Text('Enter your credentials'),
                         backgroundColor: Colors.black.withOpacity(0.4),
                       ));
                     }
                   },
                   child: Container(
-                    margin: EdgeInsets.only(top: 30),
+                    margin: const EdgeInsets.only(top: 30),
                     width: size.width / 2,
                     height: size.height / 17,
                     decoration: BoxDecoration(
@@ -108,8 +108,10 @@ class _SignUpState extends State<SignUp> {
                               (states) => Colors.transparent),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => LoginPage()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginPage()));
                         },
                         child: Text('Login',
                             style: TextStyle(

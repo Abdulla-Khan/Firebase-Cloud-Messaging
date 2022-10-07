@@ -14,8 +14,6 @@ class SignUpFunctions {
       );
       await credential.user!.updateDisplayName(name);
 
-      print(credential.user!.displayName);
-
       if (credential.user!.uid.isNotEmpty) {
         await FirebaseMessaging.instance.getToken().then(
           (value) async {
@@ -28,24 +26,25 @@ class SignUpFunctions {
           },
         );
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Account Creation Succesfull'),
+          content: const Text('Account Creation Succesfull'),
           backgroundColor: Colors.black.withOpacity(0.4),
         ));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('The password provided is too weak.'),
+          content: const Text('The password provided is too weak.'),
           backgroundColor: Colors.black.withOpacity(0.4),
         ));
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('The account already exists for that email.'),
+          content: const Text('The account already exists for that email.'),
           backgroundColor: Colors.black.withOpacity(0.4),
         ));
       }
     } catch (e) {
-      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 }
